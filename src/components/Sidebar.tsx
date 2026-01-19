@@ -1,0 +1,128 @@
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '@/contexts/AuthContext'
+import { Button } from '@/components/ui/button'
+import {
+    Users,
+    Receipt,
+    LogOut,
+    LayoutDashboard,
+    Bell,
+    Search,
+    MoreVertical
+} from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+export function Sidebar() {
+    const { user, logout } = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    const handleLogout = () => {
+        logout()
+        navigate('/login')
+    }
+
+    const navItems = [
+        {
+            title: '客户管理',
+            icon: Users,
+            href: '/customers'
+        },
+        {
+            title: '履约记录',
+            icon: Receipt,
+            href: '/fulfillments'
+        }
+    ]
+
+    return (
+        <div className="flex h-screen w-[280px] flex-col bg-background border-r">
+            {/* Header / User Profile Section */}
+            <div className="p-6">
+                <div className="flex items-center gap-3 mb-8">
+                    <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center text-primary-foreground font-bold text-xl">
+                        TC
+                    </div>
+                    <div>
+                        <h2 className="font-semibold text-lg">CRM</h2>
+                        <p className="text-sm text-muted-foreground">{user?.phone || 'User'}</p>
+                    </div>
+                    <Button variant="ghost" size="icon" className="ml-auto">
+                        <MoreVertical className="h-4 w-4 text-muted-foreground" />
+                    </Button>
+                </div>
+
+                {/* Search Bar Placeholder matching design */}
+                <div className="relative mb-6">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        className="w-full h-10 rounded-lg bg-secondary/50 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    />
+                </div>
+
+                {/* Navigation */}
+                <nav className="space-y-1">
+                    {/* Dashboard - Static for now as per likely design requirement */}
+                    <Button
+                        variant="ghost"
+                        className={cn(
+                            "w-full justify-start gap-3 h-12 text-muted-foreground font-normal hover:text-foreground",
+                        )}
+                    >
+                        <LayoutDashboard className="h-5 w-5" />
+                        <span className="text-base">Dashboard</span>
+                    </Button>
+
+                    <Button
+                        variant="ghost"
+                        className={cn(
+                            "w-full justify-start gap-3 h-12 text-muted-foreground font-normal hover:text-foreground",
+                        )}
+                    >
+                        <Bell className="h-5 w-5" />
+                        <span className="text-base">Notifications</span>
+                        <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">4</span>
+                    </Button>
+
+                    <div className="pt-4 pb-2">
+                        <p className="px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                            Management
+                        </p>
+                    </div>
+
+                    {navItems.map((item) => {
+                        const isActive = location.pathname.startsWith(item.href)
+                        return (
+                            <Link key={item.href} to={item.href}>
+                                <Button
+                                    variant={isActive ? "secondary" : "ghost"}
+                                    className={cn(
+                                        "w-full justify-start gap-3 h-12 font-normal",
+                                        isActive ? "bg-primary/5 text-primary hover:bg-primary/10" : "text-muted-foreground hover:text-foreground"
+                                    )}
+                                >
+                                    <item.icon className="h-5 w-5" />
+                                    <span className="text-base">{item.title}</span>
+                                </Button>
+                            </Link>
+                        )
+                    })}
+                </nav>
+            </div>
+
+            {/* Footer / Logout */}
+            <div className="mt-auto p-6 border-t">
+                <Button
+                    variant="ghost"
+                    className="w-full justify-start gap-3 text-muted-foreground hover:text-destructive"
+                    onClick={handleLogout}
+                >
+                    <LogOut className="h-5 w-5" />
+                    <span className="text-base">退出登录</span>
+                </Button>
+            </div>
+        </div>
+    )
+}
