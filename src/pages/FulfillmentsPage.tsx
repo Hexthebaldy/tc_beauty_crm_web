@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { fulfillmentsApi, customersApi, dictionaryApi } from '@/lib/api'
 import { Fulfillment } from '@/types'
@@ -140,12 +140,12 @@ export default function FulfillmentsPage() {
       </div>
 
       <div className="flex gap-2">
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
+        <Select value={statusFilter || 'all'} onValueChange={(value) => setStatusFilter(value === 'all' ? '' : value)}>
           <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="筛选状态" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">全部状态</SelectItem>
+            <SelectItem value="all">全部状态</SelectItem>
             <SelectItem value="ordered">已下单</SelectItem>
             <SelectItem value="fulfilled">已履约</SelectItem>
             <SelectItem value="refunded">已退款</SelectItem>
@@ -196,7 +196,7 @@ export default function FulfillmentsPage() {
                     {fulfillment.employee?.name || fulfillment.employeeId || '-'}
                   </TableCell>
                   <TableCell>
-                    {fulfillment.currency} {fulfillment.amount.toFixed(2)}
+                    {fulfillment.currency} {Number(fulfillment.amount).toFixed(2)}
                   </TableCell>
                   <TableCell>{fulfillment.channel || '-'}</TableCell>
                   <TableCell>{getStatusBadge(fulfillment.status)}</TableCell>
@@ -267,34 +267,36 @@ function FulfillmentDialog({
     paidAt: undefined,
   })
 
-  // Update form when fulfillment changes
-  useState(() => {
-    if (fulfillment) {
-      setFormData({
-        customerId: fulfillment.customerId,
-        storeId: fulfillment.storeId,
-        employeeId: fulfillment.employeeId,
-        amount: fulfillment.amount,
-        currency: fulfillment.currency,
-        status: fulfillment.status,
-        channel: fulfillment.channel,
-        note: fulfillment.note,
-        paidAt: fulfillment.paidAt,
-      })
-    } else {
-      setFormData({
-        customerId: undefined,
-        storeId: undefined,
-        employeeId: undefined,
-        amount: 0,
-        currency: 'CNY',
-        status: 'ordered',
-        channel: undefined,
-        note: undefined,
-        paidAt: undefined,
-      })
+  // Update form when dialog opens/closes or fulfillment changes
+  useEffect(() => {
+    if (open) {
+      if (fulfillment) {
+        setFormData({
+          customerId: fulfillment.customerId,
+          storeId: fulfillment.storeId,
+          employeeId: fulfillment.employeeId,
+          amount: fulfillment.amount,
+          currency: fulfillment.currency,
+          status: fulfillment.status,
+          channel: fulfillment.channel,
+          note: fulfillment.note,
+          paidAt: fulfillment.paidAt,
+        })
+      } else {
+        setFormData({
+          customerId: undefined,
+          storeId: undefined,
+          employeeId: undefined,
+          amount: 0,
+          currency: 'CNY',
+          status: 'ordered',
+          channel: undefined,
+          note: undefined,
+          paidAt: undefined,
+        })
+      }
     }
-  })
+  }, [open, fulfillment])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -383,9 +385,9 @@ function FulfillmentDialog({
                     id="amount"
                     type="number"
                     step="0.01"
-                    value={formData.amount}
+                    value={formData.amount || ''}
                     onChange={(e) =>
-                      setFormData({ ...formData, amount: parseFloat(e.target.value) })
+                      setFormData({ ...formData, amount: e.target.value ? parseFloat(e.target.value) : 0 })
                     }
                     required
                   />

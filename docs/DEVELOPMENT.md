@@ -16,7 +16,7 @@ npm install
 ### 3. 配置环境变量
 创建 `.env` 文件：
 ```env
-VITE_API_BASE_URL=http://localhost:3000
+VITE_API_BASE_URL=http://localhost:8079
 ```
 
 ### 4. 启动开发服务器

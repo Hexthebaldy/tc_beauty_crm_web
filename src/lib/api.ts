@@ -10,22 +10,14 @@ import type {
   FulfillmentListParams,
 } from '@/types'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8079'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-})
-
-// Request interceptor to add auth token
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token')
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-  return config
+  withCredentials: true, // 让浏览器自动携带 httpOnly Cookie
 })
 
 // Response interceptor to handle auth errors
@@ -33,7 +25,6 @@ api.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token')
       localStorage.removeItem('user')
       window.location.href = '/login'
     }
@@ -48,6 +39,9 @@ export const authApi = {
 
   register: (phone: string, password: string, role?: string) =>
     api.post<AuthResponse>('/api/auth/register', { phone, password, role }),
+
+  // 验证当前会话是否有效（通过任意需要认证的接口）
+  verifySession: () => api.get('/api/stores'),
 }
 
 // Customers

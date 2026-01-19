@@ -6,10 +6,9 @@ export function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
     const userStr = localStorage.getItem('user')
 
-    if (token && userStr) {
+    if (userStr) {
       try {
         const userData = JSON.parse(userStr)
         setUser(userData)
@@ -21,15 +20,13 @@ export function useAuth() {
     }
   }, [])
 
-  const login = (user: User, token: string) => {
-    localStorage.setItem('token', token)
+  const login = (user: User) => {
     localStorage.setItem('user', JSON.stringify(user))
     setUser(user)
     setIsAuthenticated(true)
   }
 
   const logout = () => {
-    localStorage.removeItem('token')
     localStorage.removeItem('user')
     setUser(null)
     setIsAuthenticated(false)

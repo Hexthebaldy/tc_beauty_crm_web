@@ -53,7 +53,7 @@ cp .env.example .env
 编辑 `.env` 文件：
 
 ```env
-VITE_API_BASE_URL=http://localhost:3000
+VITE_API_BASE_URL=http://localhost:8079
 ```
 
 ### 启动开发服务器
@@ -103,7 +103,7 @@ src/
 
 后端API文档请参考: `docs/api.md`
 
-默认API地址: `http://localhost:3000`
+默认API地址: `http://localhost:8079`
 
 ### 主要接口
 

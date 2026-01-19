@@ -208,7 +208,7 @@ npm run build
 
 ## 快速开始
 
-1. 确保后端服务运行在 http://localhost:3000
+1. 确保后端服务运行在 http://localhost:8079
 2. 安装依赖: `npm install`
 3. 启动开发服务器: `npm run dev`
 4. 访问 http://localhost:5173

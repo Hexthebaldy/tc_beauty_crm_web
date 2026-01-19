@@ -1,5 +1,5 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/button'
 import { Users, Receipt, LogOut } from 'lucide-react'
 
@@ -17,7 +17,7 @@ export default function Layout() {
       <header className="border-b">
         <div className="container flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-6">
-            <h1 className="text-xl font-bold">美业CRM管理系统</h1>
+            <h1 className="text-xl font-bold">TC Beauty CRM系统</h1>
             <nav className="flex gap-4">
               <Link to="/customers">
                 <Button variant="ghost" className="gap-2">

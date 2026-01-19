@@ -1,7 +1,7 @@
 # tc_beauty_crm_service 接口文档（后端 Hono）
 
 基础信息
-- Base URL：默认 `http://localhost:3000`
+- Base URL：默认 `http://localhost:8079`
 - 内容类型：`application/json`
 - 认证：登录成功返回 `token`；需鉴权的接口在 Header 携带 `Authorization: Bearer <token>`
 
@@ -46,23 +46,23 @@
 ## 6) 请求示例
 ```bash
 # 注册
-curl -X POST http://localhost:3000/api/auth/register \
+curl -X POST http://localhost:8079/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"phone":"13900000000","password":"123456"}'
 
 # 登录
-curl -X POST http://localhost:3000/api/auth/login \
+curl -X POST http://localhost:8079/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"phone":"13900000000","password":"123456"}'
 
 # 新增客户（需 token）
-curl -X POST http://localhost:3000/api/customers \
+curl -X POST http://localhost:8079/api/customers \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <token>" \
   -d '{"name":"张三","phone":"13911112222","preferredStoreId":1}'
 
 # 新增履约记录
-curl -X POST http://localhost:3000/api/fulfillments \
+curl -X POST http://localhost:8079/api/fulfillments \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <token>" \
   -d '{"customerId":1,"storeId":1,"amount":199.00,"channel":"meituan","status":"ordered"}'

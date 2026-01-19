@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/contexts/AuthContext'
 import { authApi } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -22,8 +22,9 @@ export default function LoginPage() {
 
     try {
       const response = await authApi.login(phone, password)
-      const { user, token } = response.data
-      login(user, token)
+      const { user } = response.data
+      // Token 已经通过 HttpOnly Cookie 设置，无需手动处理
+      login(user)
       toast({
         title: '登录成功',
         description: `欢迎回来，${user.phone}`,
@@ -33,8 +34,8 @@ export default function LoginPage() {
       const message = error.response?.status === 404
         ? '用户不存在'
         : error.response?.status === 401
-        ? '密码错误'
-        : '登录失败，请重试'
+          ? '密码错误'
+          : '登录失败，请重试'
 
       toast({
         title: '登录失败',
@@ -50,7 +51,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl text-center">美业CRM管理系统</CardTitle>
+          <CardTitle className="text-2xl text-center">TC Beauty CRM系统</CardTitle>
           <CardDescription className="text-center">
             请输入您的手机号和密码登录
           </CardDescription>

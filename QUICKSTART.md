@@ -8,7 +8,7 @@
    ```
 
 2. **启动后端服务**: 确保后端API服务正在运行
-   - 默认地址: http://localhost:3000
+   - 默认地址: http://localhost:8079
    - 参考后端项目的启动说明
 
 ## 三步启动前端
@@ -22,7 +22,7 @@ npm install
 ### 第二步：配置环境变量
 已经配置好 `.env` 文件，默认连接本地后端：
 ```env
-VITE_API_BASE_URL=http://localhost:3000
+VITE_API_BASE_URL=http://localhost:8079
 ```
 
 如需修改后端地址，编辑 `.env` 文件。
@@ -50,7 +50,7 @@ npm run dev
 如果后端没有测试账号，先使用API创建：
 
 ```bash
-curl -X POST http://localhost:3000/api/auth/register \
+curl -X POST http://localhost:8079/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"phone":"13900000000","password":"123456","role":"admin"}'
 ```
@@ -114,7 +114,7 @@ tc_beauty_crm_web/
 如果5173端口已被占用，Vite会自动使用下一个可用端口（5174, 5175...）
 
 ### 无法连接后端
-1. 检查后端服务是否运行: `curl http://localhost:3000/healthz`
+1. 检查后端服务是否运行: `curl http://localhost:8079/healthz`
 2. 检查 `.env` 中的 `VITE_API_BASE_URL` 配置
 3. 查看浏览器控制台的网络请求
 
