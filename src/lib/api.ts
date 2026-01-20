@@ -10,7 +10,10 @@ import type {
   FulfillmentListParams,
 } from '@/types'
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8079'
+// 同域优先：生产环境默认跟随当前站点，开发用 env 或 localhost:8079
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL?.trim() ||
+  (import.meta.env.DEV ? 'http://localhost:8079' : window.location.origin)
 
 const api = axios.create({
   baseURL: API_BASE_URL,
