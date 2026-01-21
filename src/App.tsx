@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
 import CustomersPage from './pages/CustomersPage'
 import FulfillmentsPage from './pages/FulfillmentsPage'
+import ConfigPage from './pages/ConfigPage'
 import Layout from './components/Layout'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -27,6 +28,7 @@ function AppRoutes() {
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="customers" element={<CustomersPage />} />
         <Route path="fulfillments" element={<FulfillmentsPage />} />
+        <Route path="config" element={<ConfigPage />} />
       </Route>
     </Routes>
   )

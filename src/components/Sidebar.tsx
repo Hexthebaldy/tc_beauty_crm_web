@@ -5,7 +5,8 @@ import {
     Users,
     Receipt,
     LogOut,
-    LayoutDashboard
+    LayoutDashboard,
+    Settings
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -29,6 +30,11 @@ export function Sidebar() {
             title: '履约记录',
             icon: Receipt,
             href: '/fulfillments'
+        },
+        {
+            title: '配置管理',
+            icon: Settings,
+            href: '/config'
         }
     ]
 

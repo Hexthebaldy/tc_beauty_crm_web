@@ -48,8 +48,25 @@ export interface Store {
   id: number
   code: string
   name: string
-  status: 'active' | 'inactive'
-  city: string
+  status: 'open' | 'closed'
+  city?: string
+  address?: string
+}
+
+export interface StoreCreateInput {
+  code: string
+  name: string
+  city?: string
+  address?: string
+  status?: 'open' | 'closed'
+}
+
+export interface StoreUpdateInput {
+  code?: string
+  name?: string
+  city?: string
+  address?: string
+  status?: 'open' | 'closed'
 }
 
 export interface Employee {

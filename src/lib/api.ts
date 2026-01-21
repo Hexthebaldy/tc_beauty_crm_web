@@ -4,6 +4,8 @@ import type {
   Customer,
   Fulfillment,
   Store,
+  StoreCreateInput,
+  StoreUpdateInput,
   Employee,
   ApiResponse,
   CustomerListParams,
@@ -71,6 +73,20 @@ export const fulfillmentsApi = {
 
   update: (id: number, data: Partial<Fulfillment>) =>
     api.put<ApiResponse<Fulfillment>>(`/api/fulfillments/${id}`, data),
+}
+
+// Stores
+export const storesApi = {
+  list: () => api.get<ApiResponse<Store[]>>('/api/stores'),
+
+  create: (data: StoreCreateInput) =>
+    api.post<ApiResponse<Store>>('/api/stores', data),
+
+  update: (id: number, data: StoreUpdateInput) =>
+    api.put<ApiResponse<Store>>(`/api/stores/${id}`, data),
+
+  delete: (id: number) =>
+    api.delete<ApiResponse<Store>>(`/api/stores/${id}`),
 }
 
 // Dictionary
