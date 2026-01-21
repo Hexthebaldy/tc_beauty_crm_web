@@ -8,6 +8,8 @@ import type {
   ApiResponse,
   CustomerListParams,
   FulfillmentListParams,
+  DashboardData,
+  DashboardParams,
 } from '@/types'
 
 // 同域优先：生产环境默认跟随当前站点，开发用 env 或 localhost:8079
@@ -78,6 +80,12 @@ export const dictionaryApi = {
     api.get<ApiResponse<Employee[]>>('/api/employees', {
       params: storeId ? { storeId } : undefined,
     }),
+}
+
+// Dashboard
+export const dashboardApi = {
+  get: (params?: DashboardParams) =>
+    api.get<ApiResponse<DashboardData>>('/api/dashboard', { params }),
 }
 
 export default api

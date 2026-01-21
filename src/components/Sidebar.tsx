@@ -5,9 +5,7 @@ import {
     Users,
     Receipt,
     LogOut,
-    LayoutDashboard,
-    Search,
-    MoreVertical
+    LayoutDashboard
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -46,19 +44,6 @@ export function Sidebar() {
                         <h2 className="font-semibold text-lg">CRM</h2>
                         <p className="text-sm text-muted-foreground">{user?.phone || 'User'}</p>
                     </div>
-                    <Button variant="ghost" size="icon" className="ml-auto">
-                        <MoreVertical className="h-4 w-4 text-muted-foreground" />
-                    </Button>
-                </div>
-
-                {/* Search Bar Placeholder matching design */}
-                <div className="relative mb-6">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <input
-                        type="text"
-                        placeholder="Search"
-                        className="w-full h-10 rounded-lg bg-secondary/50 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
-                    />
                 </div>
 
                 {/* Navigation */}

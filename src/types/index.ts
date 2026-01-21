@@ -81,3 +81,70 @@ export interface FulfillmentListParams extends ListParams {
   customerId?: number
   status?: 'ordered' | 'fulfilled' | 'refunded'
 }
+
+export interface DashboardTodayStats {
+  totalAmount: number
+  orderCount: number
+  averageAmount: number
+}
+
+export interface DashboardDayData {
+  date: string
+  totalAmount: number
+  orderCount: number
+  averageAmount: number
+}
+
+export interface DashboardTrends {
+  range: {
+    startDate: string
+    endDate: string
+  }
+  days: DashboardDayData[]
+}
+
+export interface DashboardOrder {
+  id: number
+  customerId: number
+  customerName: string
+  customerPhone: string
+  storeId: number
+  storeName: string
+  employeeId: number
+  employeeName: string
+  amount: string
+  currency: string
+  status: 'ordered' | 'fulfilled' | 'refunded'
+  channel: string
+  note: string
+  paidAt: string
+  createdAt: string
+}
+
+export interface DashboardCustomer {
+  id: number
+  name: string
+  phone: string
+  gender?: 'male' | 'female' | 'other'
+  source?: string
+  tags?: string[]
+  preferredStoreId?: number
+  preferredStoreName?: string
+  ownerEmployeeId?: number
+  ownerEmployeeName?: string
+  createdAt: string
+  status: 'active' | 'inactive'
+}
+
+export interface DashboardData {
+  today: DashboardTodayStats
+  trends: DashboardTrends
+  recentOrders: DashboardOrder[]
+  recentCustomers: DashboardCustomer[]
+}
+
+export interface DashboardParams {
+  range?: 7 | 30
+  startDate?: string
+  endDate?: string
+}
