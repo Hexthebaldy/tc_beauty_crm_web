@@ -6,7 +6,6 @@ import {
     Receipt,
     LogOut,
     LayoutDashboard,
-    Bell,
     Search,
     MoreVertical
 } from 'lucide-react'
@@ -64,33 +63,20 @@ export function Sidebar() {
 
                 {/* Navigation */}
                 <nav className="space-y-1">
-                    {/* Dashboard - Static for now as per likely design requirement */}
-                    <Button
-                        variant="ghost"
-                        className={cn(
-                            "w-full justify-start gap-3 h-12 text-muted-foreground font-normal hover:text-foreground",
-                        )}
-                    >
-                        <LayoutDashboard className="h-5 w-5" />
-                        <span className="text-base">Dashboard</span>
-                    </Button>
-
-                    <Button
-                        variant="ghost"
-                        className={cn(
-                            "w-full justify-start gap-3 h-12 text-muted-foreground font-normal hover:text-foreground",
-                        )}
-                    >
-                        <Bell className="h-5 w-5" />
-                        <span className="text-base">Notifications</span>
-                        <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">4</span>
-                    </Button>
-
-                    <div className="pt-4 pb-2">
-                        <p className="px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                            Management
-                        </p>
-                    </div>
+                    <Link to="/dashboard">
+                        <Button
+                            variant={location.pathname === '/dashboard' ? "secondary" : "ghost"}
+                            className={cn(
+                                "w-full justify-start gap-3 h-12 font-normal",
+                                location.pathname === '/dashboard'
+                                    ? "bg-primary/5 text-primary hover:bg-primary/10"
+                                    : "text-muted-foreground hover:text-foreground"
+                            )}
+                        >
+                            <LayoutDashboard className="h-5 w-5" />
+                            <span className="text-base">仪表盘</span>
+                        </Button>
+                    </Link>
 
                     {navItems.map((item) => {
                         const isActive = location.pathname.startsWith(item.href)
